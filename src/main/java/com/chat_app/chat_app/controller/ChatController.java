@@ -11,12 +11,16 @@ public class ChatController {
     @MessageMapping("/sendMessage")
     @SendTo("/topic/messages")
     public ChatMessage sendMessage(ChatMessage message) {
+        if (message == null || message.getSender() == null || message.getMessage() == null) {
+            throw new IllegalArgumentException("Invalid message payload");
+        }
+        System.out.println("Received message: " + message);
         return message;
     }
 
+
     @GetMapping("chat")
-    public String chat()
-    {
+    public String chat() {
         return "chat";
     }
 }
